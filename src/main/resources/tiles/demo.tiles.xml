@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE tiles-definitions PUBLIC 
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name="demo.index" extends="defaultTemplate">
+		<put-attribute name="workspace" value="/WEB-INF/views/demo/demo_index.jsp" />
+	</definition>
+	<definition name="demo.form.easyui" extends="pageTemplate">
+		<put-attribute name="workspace"
+			value="/WEB-INF/views/demo/demo_form_easyui.jsp" />
+	</definition>
+	
+	<definition name="demo.file.upload.form" extends="pageTemplate">
+		<put-attribute name="workspace"
+			value="/WEB-INF/views/demo/file_upload.jsp" />
+	</definition>
+	
+	<definition name="demo.file.uploadify.form" extends="pageTemplate">
+		<put-attribute name="workspace"
+			value="/WEB-INF/views/demo/file_uploadify.jsp" />
+	</definition>
+
+	<definition name="demo.dg.blog.list" extends="pageTemplate">
+		<put-attribute name="workspace" value="/WEB-INF/views/demo/blog_list.jsp" />
+	</definition>
+	<definition name="demo.dg.blog.form" extends="winTemplate">
+		<put-attribute name="workspace" value="/WEB-INF/views/demo/blog_form.jsp" />
+	</definition>
+	<definition name="demo.dg.blog.view" extends="winTemplate">
+		<put-attribute name="workspace" value="/WEB-INF/views/demo/blog_view.jsp" />
+	</definition>
+</tiles-definitions> 
