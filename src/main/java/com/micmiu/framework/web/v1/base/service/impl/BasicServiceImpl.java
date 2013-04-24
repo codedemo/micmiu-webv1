@@ -155,11 +155,13 @@ public abstract class BasicServiceImpl<E, ID extends Serializable> implements
 		return getBasicDao().findListObject(hql, paramMap);
 	}
 
+	@SuppressWarnings("unchecked")
 	protected <X> X findUniqueObject(String hql, Object... params) {
-		return getBasicDao().findUniqueObject(hql, params);
+		return (X) getBasicDao().findUniqueObject(hql, params);
 	}
 
+	@SuppressWarnings("unchecked")
 	protected <X> X findUniqueObject(String hql, Map<String, ?> paramMap) {
-		return getBasicDao().findUniqueObject(hql, paramMap);
+		return (X) getBasicDao().findUniqueObject(hql, paramMap);
 	}
 }
