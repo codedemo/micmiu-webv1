@@ -32,4 +32,10 @@ public class UsernamePasswordCaptchaToken extends UsernamePasswordToken {
 		this.captcha = captcha;
 	}
 
+	public UsernamePasswordCaptchaToken(String username, String password,
+			boolean rememberMe, String host, String captcha) {
+		this(username, password == null ? null : password.toCharArray(),
+				rememberMe, host, captcha);
+	}
+
 }

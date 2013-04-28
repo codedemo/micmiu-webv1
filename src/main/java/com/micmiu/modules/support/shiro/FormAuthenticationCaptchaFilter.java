@@ -43,8 +43,8 @@ public class FormAuthenticationCaptchaFilter extends FormAuthenticationFilter {
 
 		String host = getHost(request);
 
-		return new UsernamePasswordCaptchaToken(username,
-				password.toCharArray(), rememberMe, host, captcha);
+		return new UsernamePasswordCaptchaToken(username, password, rememberMe,
+				host, captcha);
 
 	}
 

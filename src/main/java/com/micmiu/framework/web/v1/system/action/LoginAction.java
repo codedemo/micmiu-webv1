@@ -1,5 +1,7 @@
 package com.micmiu.framework.web.v1.system.action;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,10 @@ public class LoginAction {
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
 	public String loginShow() {
+		Subject subject = SecurityUtils.getSubject();
+		if (subject.isAuthenticated()) {
+			return "redirect:/index.do";
+		}
 		return "login";
 	}
 
