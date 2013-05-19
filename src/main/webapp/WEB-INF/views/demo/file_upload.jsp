@@ -20,24 +20,25 @@
 		action="${ctx}/demo/FileUpload.do?method=uploadify" method="post">
 		<fieldset class="prepend-top">
 
-			<legend>文件上传示例</legend>
+			<legend><fmt:message key="demo.upload.title" /></legend>
 
-			<div id="messageBox" class="error-msg" style="display: none">输入有误，请先更正。</div>
+			<div id="messageBox" class="error-msg" style="display: none"><fmt:message key="global.valid.errmsg" /></div>
 
 			<div class="field">
-				<label for="file" class="field">文件:</label> <input type="file"
+				<label for="file" class="field"><fmt:message key="demo.upload.file" />:</label> <input type="file"
 					id="file" name="file" size="20" value="${fileBean.file}"
 					class="required" />
 			</div>
 			<div class="field">
-				<label for="other" class="field">描述:</label> <input type="text"
+				<label for="other" class="field"><fmt:message key="demo.upload.desc" />:</label> <input type="text"
 					id="other" name="other" size="20" value="${fileBean.other}" />
 			</div>
 
 			<div class="field">
-				<input type="button" name="btn_submit" value="提交"
+				<input type="button" name="btn_submit"
+					value="<fmt:message key="ui.tb.button.ok" />"
 					onclick="formSubmit('#input-form')" /><input type="button"
-					name="btn_cancel" value="取消"
+					name="btn_cancel" value="<fmt:message key="ui.tb.button.cancel" />"
 					onclick="cancelTabForm('#demo-lt-tabs')" />
 			</div>
 		</fieldset>

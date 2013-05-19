@@ -11,6 +11,4 @@ public interface UserService extends BasicService<User, Long> {
 	User getUserByLoginName(String loginName);
 
 	String getPassword(String loginName);
-
-	int batchDel(String ids);
 }

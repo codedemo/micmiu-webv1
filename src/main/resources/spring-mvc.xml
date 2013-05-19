@@ -15,6 +15,15 @@
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+	
+	<!-- i18n -->
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="zh_CN"></property>
+	</bean>
 
 
 	<!-- Spring3.1之前 注解简写配置 -->
@@ -59,7 +68,11 @@
 
 	<!--Spring3.1 之后的注解 HandlerMapping -->
 	<bean
-		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+		<property name="interceptors" ref="localeChangeInterceptor" />
+		<property name="order" value="1"></property>
+	</bean>
+	
 	<!--Spring3.1 之后的注解 HandlerAdapter -->
 	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" 
 		/> -->
@@ -132,16 +145,12 @@
 	<bean id="defaultJsonView"
 		class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
 
-	<bean name="jsonResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
-		<property name="location">
-			<value>
-				classpath:spring-view.xml
-			</value>
-		</property>
+	<bean name="xmlViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+		<property name="location" value="classpath:spring-view.xml" />
 	</bean>
 	<!-- end -->
 
-
+	<!-- 如果没有增加如下配置，shiro注解@RequiresRoles @RequiresPermissions不起作用-->
 	<!-- 支持 Shiro对Controller的AOP安全控制 begin -->
 	<bean
 		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"

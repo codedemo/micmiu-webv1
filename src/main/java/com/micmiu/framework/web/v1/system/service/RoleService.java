@@ -9,7 +9,5 @@ import com.micmiu.framework.web.v1.system.entity.Role;
  */
 public interface RoleService extends BasicService<Role, Long> {
 
-	int batchDel(String ids);
-
 	Role getRoleByName(String name);
 }

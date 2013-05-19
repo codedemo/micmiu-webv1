@@ -47,6 +47,12 @@ MM_Ex.formWin = function(paras) {
 			text : '确认',
 			iconCls : 'icon-ok',
 			handler : function() {
+				
+				if(typeof beforeFormSubmit == 'function'){
+					if (!beforeFormSubmit()) {
+						return;
+					}
+				}
 				var actionUrl = $(_form_id).attr("action");
 				if(!$(_form_id).valid()){
 					return;

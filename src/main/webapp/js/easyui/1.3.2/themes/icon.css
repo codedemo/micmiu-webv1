@@ -55,7 +55,18 @@
 .icon-table{
 	background:url('icons/table.png') no-repeat center center;
 }
-
+.icon-excel{
+	background:url('icons/excel.png') no-repeat center center;
+}
+.icon-pdf{
+	background:url('icons/pdf.png') no-repeat center center;
+}
+.icon-csv{
+	background:url('icons/csv.png') no-repeat center center;
+}
+.icon-export{
+	background:url('icons/export.png') no-repeat center center;
+}
 .icon-mini-add{
 	background:url('icons/mini_add.png') no-repeat center center;
 }

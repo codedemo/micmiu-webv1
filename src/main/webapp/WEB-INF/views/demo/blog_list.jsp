@@ -7,62 +7,107 @@
 	<table id="dg-list">
 	</table>
 	<div id="tb" style="padding: 5px; height: auto">
+		<div>
+			<form id="query-form" method="post">
+				<fmt:message key="blog.gd.col.title" />
+				: <input style="width: 80px" name="title"> <a
+					href="javascript:void(0)" class="easyui-linkbutton"
+					data-options="iconCls:'icon-search'" onclick="MM_utils.formQuery()"><fmt:message
+						key="ui.tb.button.query" /></a><a href="javascript:void(0)"
+					class="easyui-linkbutton" data-options="iconCls:'icon-redo'"
+					onclick="MM_utils.formReset();"><fmt:message
+						key="ui.tb.button.reset" /></a>
+			</form>
+			<form id="export-form" method="post"></form>
+		</div>
 		<div style="margin-bottom: 5px">
 			<shiro:hasPermission name="demo_common:view">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-add',plain:true"
-					onclick="MM_utils.baseWinAdd({win_url:'blog.do?method=showForm'})">添加</a>
+					onclick="MM_utils.baseWinAdd({win_url:'blog.do?method=showForm'})"><fmt:message
+						key="ui.tb.button.add" /></a>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="demo_common:view">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-edit',plain:true"
-					onclick="MM_utils.baseWinEdit({win_url:'blog.do?method=showForm'});">修改</a>
+					onclick="MM_utils.baseWinEdit({win_url:'blog.do?method=showForm'});"><fmt:message
+						key="ui.tb.button.edit" /></a>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="demo_common:view">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-remove',plain:true"
-					onclick="MM_utils.baseGDDel('#dg-list','blog.do?method=batchDel')">删除</a>
+					onclick="MM_utils.baseGDDel('#dg-list','blog.do?method=deleteBatch')"><fmt:message
+						key="ui.tb.button.delete" /></a>
 			</shiro:hasPermission>
 			<a href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true"
-				onclick="MM_utils.baseView({win_url:'blog.do?method=getViewData'})">查看</a>
+				onclick="MM_utils.baseView({win_url:'blog.do?method=getViewData'})"><fmt:message
+					key="ui.tb.button.view" /></a> <a href="javascript:void(0)" id="tb_mb"
+				class="easyui-menubutton"
+				data-options="iconCls:'icon-excel',plain:true"><fmt:message
+					key="ui.tb.button.export" /></a>
 		</div>
-		<div>
-			<form id="query-form">
-				角色: <input style="width: 80px" name="roleName"> <a
-					href="javascript:void(0)" class="easyui-linkbutton"
-					data-options="iconCls:'icon-search'" onclick="MM_utils.formQuery()">查询</a>
-			</form>
+		<div id="mb_mm" style="width: 50px;">
+			<div data-options="iconCls:'icon-excel'"
+				onclick="MM_utils.baseExport({actionURL:'blog.do?method=export&exportType=POI'})">POI</div>
+			<div data-options="iconCls:'icon-excel'"
+				onclick="MM_utils.baseExport({actionURL:'blog.do?method=export&exportType=JXL'})">JXL</div>
+			<div data-options="iconCls:'icon-csv'"
+				onclick="MM_utils.baseExport({actionURL:'blog.do?method=export&exportType=CSV'})">CSV</div>
+			<div data-options="iconCls:'icon-pdf'"
+				onclick="MM_utils.baseExport({actionURL:'blog.do?method=export&exportType=PDF'})">PDF</div>
 		</div>
 	</div>
 	<div id="form-win"></div>
 </body>
 <script type="text/javascript">
-
-var dgColumns;
-$.ajax({
-	  url: "blog.do?method=getGridColumns",
-	  async:false,
-	  success: function(data){
-		  dgColumns = data;
-	  },
-	  dataType: "json"
+	$('#tb_mb').menubutton({
+		iconCls : 'icon-export',
+		menu : '#mb_mm'
 	});
- 
-$('#dg-list').datagrid({
-	title:'博客列表',
-    url:'blog.do?method=query',
-    toolbar:'#tb',
-    fit: true,
-    rownumbers:true,
-    singleSelect:false,
-    iconCls:'icon-table',
-    pagination:true,
-    sortName: 'title',
-    frozenColumns:[[
-                    {field:'ck',checkbox:true}  
-				]],
-    columns: new Array(dgColumns)
-}); 
+	$('#dg-list').datagrid({
+		title : '',
+		url : 'blog.do?method=query',
+		toolbar : '#tb',
+		fit : true,
+		rownumbers : true,
+		singleSelect : false,
+		iconCls : 'icon-table',
+		pagination : true,
+		sortName : 'title',
+		frozenColumns : [ [ {
+			field : 'ck',
+			checkbox : true
+		} ] ],
+		columns : [ [ {
+			field : 'title',
+			title : '<fmt:message key="blog.gd.col.title" />',
+			width : 100
+		}, {
+			field : 'category',
+			title : '<fmt:message key="blog.gd.col.category" />',
+			width : 100
+		}, {
+			field : 'author',
+			title : '<fmt:message key="blog.gd.col.author" />',
+			width : 100
+		}, {
+			field : 'url',
+			title : '<fmt:message key="blog.gd.col.url" />',
+			width : 100
+		}, {
+			field : 'other',
+			title : '<fmt:message key="blog.gd.col.other" />',
+			width : 100
+		}, {
+			field : 'publishDate',
+			title : '<fmt:message key="blog.gd.col.publishDate" />',
+			width : 100
+		}, {
+			field : 'creater',
+			title : '<fmt:message key="blog.gd.col.creater" />',
+			width : 100
+		} ] ]
+	});
 </script>
 </html>

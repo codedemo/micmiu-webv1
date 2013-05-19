@@ -30,19 +30,6 @@ public class RoleServiceImpl extends BasicServiceImpl<Role, Long> implements
 	}
 
 	@Override
-	public int batchDel(String ids) {
-		String[] idArr = ids.split(",");
-		for (String id : idArr) {
-			Role role = roleDao.findById(Long.parseLong(id));
-			if (null != role) {
-				roleDao.delete(role);
-			}
-		}
-		return idArr.length;
-
-	}
-
-	@Override
 	public Role getRoleByName(String name) {
 		return roleDao.findUnique("roleName", name);
 	}

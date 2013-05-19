@@ -44,6 +44,14 @@ public abstract class BasicServiceImpl<E, ID extends Serializable> implements
 	}
 
 	@Override
+	public void delete(ID[] ids) {
+		for (ID id : ids) {
+			this.delete(id);
+		}
+
+	}
+
+	@Override
 	public void update(E entity) {
 		getBasicDao().update(entity);
 
@@ -65,8 +73,14 @@ public abstract class BasicServiceImpl<E, ID extends Serializable> implements
 	 * @param query
 	 * @return List
 	 */
+	@Override
 	public List<E> pageQuery(AbstractPagedQuery<E> page) {
 		return getBasicDao().pageQuery(page);
+	}
+
+	@Override
+	public List<E> exportPageQuery(AbstractPagedQuery<E> page) {
+		return getBasicDao().exportPageQuery(page);
 	}
 
 	/**
@@ -98,8 +112,7 @@ public abstract class BasicServiceImpl<E, ID extends Serializable> implements
 	/**
 	 * 按HQL查询对象列表.
 	 * 
-	 * @param paramMap
-	 *            命名参数,按名称绑定.
+	 * @param paramMap 命名参数,按名称绑定.
 	 */
 	@Override
 	public List<E> findList(final String hql, final Map<String, ?> paramMap) {
@@ -119,8 +132,7 @@ public abstract class BasicServiceImpl<E, ID extends Serializable> implements
 	/**
 	 * 按HQL查询唯一对象.
 	 * 
-	 * @param paramMap
-	 *            命名参数,按名称绑定.
+	 * @param paramMap 命名参数,按名称绑定.
 	 */
 	@Override
 	public E findUnique(final String hql, final Map<String, ?> paramMap) {

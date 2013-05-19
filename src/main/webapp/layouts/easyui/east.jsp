@@ -4,17 +4,17 @@
 <div id="east-p" class="easyui-panel"
 	data-options="fit:true,border:false">
 	<table id="pg-view" class="easyui-propertygrid"
-		data-options="fit:true,border:false,showGroup:true,nowrap:false,columns: mycolumns"></table>
+		data-options="fit:true,border:false,showGroup:true,nowrap:false,columns: mycolumns,scrollbarSize:0"></table>
 </div>
 <script type="text/javascript">
 	var mycolumns = [ [ {
 		field : 'name',
-		title : '属性',
+		title : '<fmt:message key="ui.ppgrid.filed.name" />',
 		width : 100,
 		sortable : true
 	}, {
 		field : 'value',
-		title : '值',
+		title : '<fmt:message key="ui.ppgrid.filed.value" />',
 		width : 100,
 		resizable : false
 	} ] ];

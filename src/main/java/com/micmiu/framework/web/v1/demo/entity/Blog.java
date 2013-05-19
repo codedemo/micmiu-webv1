@@ -23,31 +23,31 @@ import com.micmiu.modules.json.jackson.CustomDateSerializer;
 @Table(name = "T_BLOG")
 public class Blog extends IdEntity {
 
-	@ShowParam(value = "标题")
+	@ShowParam(value = "blog.gd.col.title")
 	@Column(name = "TITLE", length = 255)
 	private String title;
 
-	@ShowParam("作者")
+	@ShowParam("blog.gd.col.author")
 	@Column(name = "AUTHOR", length = 20)
 	private String author;
 
-	@ShowParam("分类")
+	@ShowParam("blog.gd.col.category")
 	@Column(name = "CATEGORY", length = 50)
 	private String category;
 
-	@ShowParam(value = "地址", width = 200)
+	@ShowParam(value = "blog.gd.col.url", width = 200)
 	@Column(name = "URL", length = 512)
 	private String url;
 
-	@ShowParam("其他")
+	@ShowParam("blog.gd.col.other")
 	@Column(name = "OTHER", length = 1024)
 	private String other;
 
-	@ShowParam("创建人")
+	@ShowParam("blog.gd.col.creater")
 	@Column(name = "CREATER", length = 20)
 	private String creater;
 
-	@ShowParam("发布日期")
+	@ShowParam("blog.gd.col.publishDate")
 	@Column(name = "PUBLISH_DATE")
 	private Date publishDate;
 

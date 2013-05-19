@@ -4,6 +4,8 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 
+	<!-- blog page config -->
+
 	<definition name="demo.index" extends="defaultTemplate">
 		<put-attribute name="workspace" value="/WEB-INF/views/demo/demo_index.jsp" />
 	</definition>
@@ -22,7 +24,16 @@
 			value="/WEB-INF/views/demo/file_uploadify.jsp" />
 	</definition>
 
-	<definition name="demo.dg.blog.list" extends="pageTemplate">
+	<definition name="demo.dg.blog.list.base" extends="pageTemplate">
+		<put-attribute name="workspace" value="/WEB-INF/views/demo/blog_list_base.jsp" />
+	</definition>
+	<definition name="demo.dg.blog.list.tb" extends="pageTemplate">
+		<put-attribute name="workspace" value="/WEB-INF/views/demo/blog_list_tb.jsp" />
+	</definition>
+	<definition name="demo.dg.blog.list.export" extends="pageTemplate">
+		<put-attribute name="workspace" value="/WEB-INF/views/demo/blog_list_export.jsp" />
+	</definition>
+	<definition name="demo.dg.blog.list" extends="defaultTemplate">
 		<put-attribute name="workspace" value="/WEB-INF/views/demo/blog_list.jsp" />
 	</definition>
 	<definition name="demo.dg.blog.form" extends="winTemplate">
@@ -30,5 +41,12 @@
 	</definition>
 	<definition name="demo.dg.blog.view" extends="winTemplate">
 		<put-attribute name="workspace" value="/WEB-INF/views/demo/blog_view.jsp" />
+	</definition>
+	
+	<definition name="demo.i18n.index" extends="pageTemplate">
+		<put-attribute name="workspace" value="/WEB-INF/views/demo/i18n_index.jsp" />
+	</definition>
+	<definition name="demo.i18n.show" extends="pageTemplate">
+		<put-attribute name="workspace" value="/WEB-INF/views/demo/i18n_show.jsp" />
 	</definition>
 </tiles-definitions> 

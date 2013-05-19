@@ -11,14 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.micmiu.framework.utils.MenuPermUtil;
+import com.micmiu.framework.utils.RefTools;
+import com.micmiu.framework.web.GlobalConstant;
 import com.micmiu.framework.web.v1.system.entity.Menu;
 import com.micmiu.framework.web.v1.system.entity.Permssion;
 import com.micmiu.framework.web.v1.system.entity.Role;
@@ -27,6 +31,7 @@ import com.micmiu.framework.web.v1.system.service.MenuService;
 import com.micmiu.framework.web.v1.system.service.UserService;
 import com.micmiu.framework.web.v1.system.vo.TreeNode;
 import com.micmiu.framework.web.v1.system.vo.UserQuery;
+import com.micmiu.modules.support.easyui.GridColumn;
 
 /**
  * 
@@ -41,6 +46,9 @@ public class UserAction {
 
 	@Autowired
 	private MenuService menuService;
+
+	@Autowired
+	private MessageSource messageSource;
 
 	@RequestMapping(params = { "method=list" })
 	public String list(Model model) {
@@ -57,6 +65,14 @@ public class UserAction {
 		retMap.put("total", pageQuery.getTotalCount());
 		retMap.put("rows", users);
 		return retMap;
+	}
+
+	@RequestMapping(params = { "method=getGridColumns" })
+	@ResponseBody
+	public List<GridColumn> getGridColumns(Model model,
+			HttpServletRequest request) {
+		return RefTools.getBeanColumns(User.class, messageSource,
+				RequestContextUtils.getLocale(request));
 	}
 
 	@RequestMapping(params = { "method=showForm" })
@@ -84,23 +100,31 @@ public class UserAction {
 		return message;
 	}
 
-	@RequestMapping(params = "method=batchDel")
+	@RequestMapping(params = "method=deleteBatch")
 	@ResponseBody
-	public String batchDelete(String ids) {
+	public String deleteBatch(String ids, HttpServletRequest request) {
 		String message = null;
 		try {
-			userService.batchDel(ids);
-			message = "删除成功";
+			String[] idArr = ids.split(",");
+			for (String id : idArr) {
+				userService.delete(Long.parseLong(id));
+			}
+			message = messageSource.getMessage(GlobalConstant.MSG_SUCC, null,
+					RequestContextUtils.getLocale(request));
 		} catch (Exception e) {
-			message = "删除用户失败：\n" + e.getMessage();
+			message = messageSource.getMessage(GlobalConstant.MSG_FAILED, null,
+					RequestContextUtils.getLocale(request));
 		}
 		return message;
 	}
 
 	@RequestMapping(params = { "method=delete" })
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(Long id, RedirectAttributes redirectAttributes,
+			HttpServletRequest request) {
 		userService.delete(id);
-		redirectAttributes.addFlashAttribute("message", "删除用户成功");
+		redirectAttributes.addFlashAttribute("message", messageSource
+				.getMessage(GlobalConstant.MSG_SUCC, null,
+						RequestContextUtils.getLocale(request)));
 		return "redirect:/system/user.do?method=list";
 	}
 
@@ -123,18 +147,16 @@ public class UserAction {
 	public List<TreeNode> getUserTreeMenu(HttpServletRequest request) {
 		String contextPath = request.getSession().getServletContext()
 				.getContextPath();
+
 		List<TreeNode> treeNodeList = new ArrayList<TreeNode>();
-		TreeNode index = new TreeNode();
-		index.setId("0");
-		index.setText("<a href='" + contextPath + "/index.do'>" + "首页</a>");
-		treeNodeList.add(index);
 
 		String loginName = SecurityUtils.getSubject().getPrincipal().toString();
 		User currUser = userService.getUserByLoginName(loginName);
 
-		MenuPermUtil
-				.parseUserMenu(menuService.getRootMenuByOrder(), treeNodeList,
-						parseMenuIds(currUser.getRoleList()), contextPath);
+		MenuPermUtil.parseUserMenu(menuService.getRootMenuByOrder(),
+				treeNodeList, parseMenuIds(currUser.getRoleList()),
+				contextPath, messageSource,
+				RequestContextUtils.getLocale(request));
 
 		return treeNodeList;
 	}

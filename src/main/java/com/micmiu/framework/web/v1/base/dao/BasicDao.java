@@ -76,6 +76,14 @@ public interface BasicDao<E, ID extends Serializable> {
 	public List<E> pageQuery(AbstractPagedQuery<E> page);
 
 	/**
+	 * 分页查询
+	 * 
+	 * @param query
+	 * @return List<E> 返回分页查询结果
+	 */
+	public List<E> exportPageQuery(AbstractPagedQuery<E> page);
+
+	/**
 	 * 按属性查找对象列表.
 	 * 
 	 * @param criterions
@@ -100,8 +108,7 @@ public interface BasicDao<E, ID extends Serializable> {
 	/**
 	 * 按HQL、可变参数列表 查询对象列表.
 	 * 
-	 * @param paramMap
-	 *            命名参数,按名称绑定.
+	 * @param paramMap 命名参数,按名称绑定.
 	 */
 	public List<E> findList(final String hql, final Map<String, ?> paramMap);
 
@@ -115,8 +122,7 @@ public interface BasicDao<E, ID extends Serializable> {
 	/**
 	 * 按HQL查询唯一对象.
 	 * 
-	 * @param paramMap
-	 *            命名参数,按名称绑定.
+	 * @param paramMap 命名参数,按名称绑定.
 	 */
 	public E findUnique(final String hql, final Map<String, ?> paramMap);
 
@@ -154,16 +160,14 @@ public interface BasicDao<E, ID extends Serializable> {
 	/**
 	 * 按HQL查询对象列表.
 	 * 
-	 * @param params
-	 *            数量可变的参数,按顺序绑定.
+	 * @param params 数量可变的参数,按顺序绑定.
 	 */
 	public <X> List<X> findListObject(final String hql, final Object... params);
 
 	/**
 	 * 按HQL查询对象列表.
 	 * 
-	 * @param paramMap
-	 *            命名参数,按名称绑定.
+	 * @param paramMap 命名参数,按名称绑定.
 	 */
 	public <X> List<X> findListObject(final String hql,
 			final Map<String, ?> paramMap);
@@ -171,16 +175,14 @@ public interface BasicDao<E, ID extends Serializable> {
 	/**
 	 * 按HQL查询唯一对象.
 	 * 
-	 * @param params
-	 *            数量可变的参数,按顺序绑定.
+	 * @param params 数量可变的参数,按顺序绑定.
 	 */
 	public <X> X findUniqueObject(final String hql, final Object... params);
 
 	/**
 	 * 按HQL查询唯一对象.
 	 * 
-	 * @param paramMap
-	 *            命名参数,按名称绑定.
+	 * @param paramMap 命名参数,按名称绑定.
 	 */
 	public <X> X findUniqueObject(final String hql,
 			final Map<String, ?> paramMap);

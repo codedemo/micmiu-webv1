@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <html>
 <body>
-	<h1>Hello, welcome to my framework !</h1>
+	<h1>Hello, welcome to Michael Web Framework for J2EE!</h1>
 	
 	<h2>tech summary</h2>
 	<ul>

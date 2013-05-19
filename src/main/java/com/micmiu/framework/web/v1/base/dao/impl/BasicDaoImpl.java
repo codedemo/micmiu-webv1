@@ -146,6 +146,14 @@ public abstract class BasicDaoImpl<T, ID extends Serializable> implements
 		return page.getQueryResults();
 	}
 
+	@Override
+	public List<T> exportPageQuery(AbstractPagedQuery<T> page) {
+		Query query = page.buildQuery(this.getSession(), false);
+		List<T> list = query.list();
+		page.setQueryResults(list);
+		return page.getQueryResults();
+	}
+
 	/**
 	 * 按属性查找对象列表, 匹配方式为相等.
 	 */
@@ -177,8 +185,7 @@ public abstract class BasicDaoImpl<T, ID extends Serializable> implements
 	/**
 	 * 按HQL查询对象列表.
 	 * 
-	 * @param values
-	 *            命名参数,按名称绑定.
+	 * @param values 命名参数,按名称绑定.
 	 */
 	@Override
 	public List<T> findList(final String hql, final Map<String, ?> values) {
@@ -198,8 +205,7 @@ public abstract class BasicDaoImpl<T, ID extends Serializable> implements
 	/**
 	 * 按HQL查询唯一对象.
 	 * 
-	 * @param values
-	 *            命名参数,按名称绑定.
+	 * @param values 命名参数,按名称绑定.
 	 */
 	@Override
 	public T findUnique(final String hql, final Map<String, ?> values) {
@@ -270,8 +276,7 @@ public abstract class BasicDaoImpl<T, ID extends Serializable> implements
 	/**
 	 * 按HQL查询唯一对象.
 	 * 
-	 * @param params
-	 *            数量可变的参数,按顺序绑定.
+	 * @param params 数量可变的参数,按顺序绑定.
 	 */
 	public <X> X findUniqueObject(final String hql, final Object... params) {
 		return (X) createQuery(hql, params).uniqueResult();
@@ -280,8 +285,7 @@ public abstract class BasicDaoImpl<T, ID extends Serializable> implements
 	/**
 	 * 按HQL查询唯一对象.
 	 * 
-	 * @param paramMap
-	 *            命名参数,按名称绑定.
+	 * @param paramMap 命名参数,按名称绑定.
 	 */
 	public <X> X findUniqueObject(final String hql,
 			final Map<String, ?> paramMap) {

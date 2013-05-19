@@ -7,10 +7,10 @@
 		<put-attribute name="workspace" value="/WEB-INF/views/login.jsp" />
 	</definition>
 	<definition name="index" extends="defaultTemplate">
-		<put-attribute name="position" value="首页" type="string" />
+		<put-attribute name="position" value="tiles.index" type="string" />
 		<put-attribute name="workspace" value="/WEB-INF/views/index.jsp" />
 	</definition>
-	
+
 	<!-- user page config -->
 	<definition name="user.list" extends="defaultTemplate">
 		<put-attribute name="workspace"
@@ -24,7 +24,7 @@
 		<put-attribute name="workspace"
 			value="/WEB-INF/views/system/user_view.jsp" />
 	</definition>
-	
+
 	<!-- role page config -->
 	<definition name="role.list" extends="defaultTemplate">
 		<put-attribute name="workspace"

@@ -4,7 +4,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <jsp:include page="header.jsp" />
-<title><tiles:getAsString name="title" /></title>
 </head>
 <body class="easyui-layout">
 	<div style="padding: 5px; background: #eee;"

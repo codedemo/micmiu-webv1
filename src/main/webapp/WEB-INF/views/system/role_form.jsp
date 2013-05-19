@@ -2,32 +2,30 @@
 <%@ include file="/include/taglibs.jsp"%>
 <html>
 <head>
-<script>
-	
-</script>
 </head>
-
 <body>
 	<form:form id="input-form" modelAttribute="role"
 		action="${ctx}/system/role.do?method=save" method="post">
-		<input type="hidden" name="id" value="${role.id}" />
+		<input type="hidden" id="id" name="id" value="${role.id}" />
 		<fieldset class="prepend-top">
 
-			<legend>用户信息</legend>
+			<legend><fmt:message key="system.role.name" /></legend>
 
-			<div id="messageBox" class="error-msg" style="display: none">输入有误，请先更正。</div>
+			<div id="messageBox" class="error-msg" style="display: none"><fmt:message key="global.valid.errmsg" /></div>
 
 			<div>
-				<label for="roleName" class="field">角色:</label> <input type="text"
+				<label for="roleName" class="field"><fmt:message key="system.role.roleName" />:</label> <input type="text"
 					id="roleName" name="roleName" size="20" value="${role.roleName}"
 					class="required" />
 			</div>
 			<div>
-				<label for="authList" class="field">权限:</label>
-				<form:checkboxes path="authList" items="${permissionMap}" />
-				<div></div>
+				<label for="nodes" class="field"><fmt:message key="system.role.nodes" />:</label> <input type="hidden"
+					id="nodes" name="nodes" />
+				<ul id="tree-perm"></ul>
 			</div>
 		</fieldset>
+		<input type="button" name="btn_test" value="test"
+			onclick="getChecked()" />
 
 	</form:form>
 </body>
@@ -44,22 +42,45 @@
 													remote : "${ctx}/system/role.do?method=checkRoleName&oldRoleName="
 															+ encodeURIComponent('${role.roleName}')
 												},
-												authList : "required"
+												nodes : "required"
 											},
 											messages : {
 												roleName : {
-													remote : "角色名已存在"
+													remote : "<fmt:message key="system.role.roleName.exit" />"
 												},
 											},
 											errorContainer : "#messageBox",
 											errorPlacement : function(error,
 													element) {
-												if (element.is(":checkbox")){
-													error.appendTo(element.parent().next());
-												}else
+												if (element.is(":checkbox")) {
+													error.appendTo(element
+															.parent().next());
+												} else
 													error.insertAfter(element);
 											}
 										});
 					});
+	$('#tree-perm').tree({
+		url : '<c:url value="/system/role.do?method=getPermTree"/>'+'&id='+$('#id').val(),
+		animate : true,
+		checkbox : true
+	})
+
+	function beforeFormSubmit() {
+		var nodes = $('#tree-perm').tree('getChecked');
+		var s = '';
+		for ( var i = 0; i < nodes.length; i++) {
+			if (s != '')
+				s += ',';
+			s += nodes[i].id;
+		}
+		$("#nodes").val(s);
+		return true;
+
+	}
+	function getChecked() {
+		beforeFormSubmit();
+		alert($("#nodes").val());
+	}
 </script>
 </html>

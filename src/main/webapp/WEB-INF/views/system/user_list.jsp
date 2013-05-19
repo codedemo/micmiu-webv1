@@ -2,57 +2,64 @@
 <%@ include file="/include/taglibs.jsp"%>
 <html>
 <head>
-<title>用户列表</title>
 </head>
-
 <body>
-	<table id="dg-list" class="easyui-datagrid" title="用户列表"
-		style="width: 700px; height: auto"
-		data-options="rownumbers:true,singleSelect:false,iconCls:'icon-table',pagination:true,url:'user.do?method=query',toolbar:'#tb',fit: true">
-		<thead>
-			<tr>
-				<th data-options="field:'ck',checkbox:true"></th>
-				<th data-options="field:'id',width:80,sortable:true">ID</th>
-				<th data-options="field:'loginName',width:120,sortable:true">登录名</th>
-				<th data-options="field:'name',width:120">姓名</th>
-				<th data-options="field:'roleName',width:120">角色</th>
-				<th data-options="field:'email',width:200">邮箱</th>
-			</tr>
-		</thead>
+	<table id="dg-list">
 	</table>
 	<div id="tb" style="padding: 5px; height: auto">
+			<div>
+			<form id="query-form">
+				<fmt:message key="system.user.loginName" />: <input style="width: 80px" name="loginName"> <fmt:message key="system.user.name" />: <input
+					style="width: 80px" name="name"> <a
+					href="javascript:void(0)" class="easyui-linkbutton"
+					data-options="iconCls:'icon-search'" onclick="MM_utils.formQuery()"><fmt:message key="ui.tb.button.query"/></a>
+			</form>
+		</div>
 		<div style="margin-bottom: 5px">
 			<shiro:hasPermission name="user:add">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-add',plain:true"
-					onclick="MM_utils.baseWinAdd({win_url:'user.do?method=showForm'})">添加</a>
+					onclick="MM_utils.baseWinAdd({win_url:'user.do?method=showForm'})"><fmt:message key="ui.tb.button.add"/></a>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="user:edit">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-edit',plain:true"
-					onclick="MM_utils.baseWinEdit({win_url:'user.do?method=showForm'});">修改</a>
+					onclick="MM_utils.baseWinEdit({win_url:'user.do?method=showForm'});"><fmt:message key="ui.tb.button.edit"/></a>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="user:delete">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-remove',plain:true"
-					onclick="MM_utils.baseGDDel('#dg-list','user.do?method=batchDel')">删除</a>
+					onclick="MM_utils.baseGDDel('#dg-list','user.do?method=deleteBatch')"><fmt:message key="ui.tb.button.delete"/></a>
 			</shiro:hasPermission>
 			<a href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true"
-				onclick="MM_utils.baseView({win_url:'user.do?method=showView'})">查看</a>
+				onclick="MM_utils.baseView({win_url:'user.do?method=getViewData'})"><fmt:message key="ui.tb.button.view"/></a>
 		</div>
-		<div>
-			<form id="query-form">
-				登录名: <input style="width: 80px" name="loginName"> 用户名: <input
-					style="width: 80px" name="name"> <a
-					href="javascript:void(0)" class="easyui-linkbutton"
-					data-options="iconCls:'icon-search'" onclick="MM_utils.formQuery()">查询</a>
-			</form>
-		</div>
+
 	</div>
 	<div id="form-win"></div>
 </body>
 <script type="text/javascript">
-	
+
+$('#dg-list').datagrid({
+	title:'',
+    url:'user.do?method=query',
+    toolbar:'#tb',
+    fit: true,
+    rownumbers:true,
+    singleSelect:false,
+    iconCls:'icon-table',
+    pagination:true,
+    frozenColumns:[[
+                    {field:'ck',checkbox:true}  
+				]],
+    columns: [[
+              	{field:'loginName',title:'<fmt:message key="system.user.loginName" />',width:100},  
+               	{field:'name',title:'<fmt:message key="system.user.name" />',width:100},
+            	{field:'email',title:'<fmt:message key="system.user.email" />',width:100},
+            	{field:'other',title:'<fmt:message key="system.user.other" />',width:100},
+            	{field:'roleName',title:'<fmt:message key="system.role.roleName" />',width:100}
+           ]]
+}); 
 </script>
 </html>

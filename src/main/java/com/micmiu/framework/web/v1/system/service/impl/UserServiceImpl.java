@@ -34,11 +34,6 @@ public class UserServiceImpl extends BasicServiceImpl<User, Long> implements
 		return getUserByLoginName(loginName).getPassword();
 	}
 
-	@Override
-	public int batchDel(String ids) {
-		return userDao.executeHQL("delete from User where id in (" + ids + ")");
-	}
-
 	@Autowired
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;

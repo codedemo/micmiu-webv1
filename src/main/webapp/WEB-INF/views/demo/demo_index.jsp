@@ -9,32 +9,40 @@
 
 <body>
 	<div id="demo-lt" class="easyui-layout" data-options="fit:true">
-		<div data-options="region:'west',title:'demos',split:true"
+		<div data-options="region:'west',title:'<fmt:message key="demo.lt.title" />',split:true"
 			style="width: 200px;">
 			<ul id="demo-lt-ul" class="easyui-tree">
-				<li><span>控件演示</span>
+				<li><span><fmt:message key="demo.lt.title.base" /></span>
 					<ul>
 						<li><span><a href="javascript:void(0)"
-								onclick="openTab4Demo('demo-tab-form','from','<c:url value="/demo/index.do?method=showForm"/>')">form表单</a></span></li>
+								onclick="openTab4Demo('demo-tab-form','<fmt:message key="demo.lt.title.base.form" />','<c:url value="/demo/index.do?method=showForm"/>')"><fmt:message key="demo.lt.title.base.form" /></a></span></li>
 						<li><span><a href="javascript:void(0)"
-								onclick="openTab4Demo('demo-upload-file','file-upload','<c:url value="/demo/FileUpload.do?method=showForm"/>')">文件上传</a></span></li>
+								onclick="openTab4Demo('demo-upload-file','<fmt:message key="demo.lt.title.base.upload" />','<c:url value="/demo/FileUpload.do?method=showForm"/>')"><fmt:message key="demo.lt.title.base.upload" /></a></span></li>
 						<li><span><a href="javascript:void(0)"
-								onclick="openTab4Demo('demo-upload-file','Uploadify','<c:url value="/demo/FileUpload.do?method=showUploadifyForm"/>')">Uploadify上传</a></span></li>
+								onclick="openTab4Demo('demo-uploadify','<fmt:message key="demo.lt.title.base.uploadify" />','<c:url value="/demo/FileUpload.do?method=showUploadifyForm"/>')"><fmt:message key="demo.lt.title.base.uploadify" /></a></span></li>
 					</ul></li>
-				<li><span>表格演示</span>
+				<li><span><fmt:message key="demo.lt.title.dg" /></span>
 					<ul>
 						<li><span><a href="javascript:void(0)"
-								onclick="openTab4Demo('demo-tab-dg-blog','datagrid-blog','<c:url value="/demo/blog.do?method=list"/>')">datagrid</a></span></li>
+								onclick="openTab4Demo('demo-tab-dg-base','<fmt:message key="demo.lt.title.dg.base" />','<c:url value="/demo/blog.do?method=dg4base"/>')"><fmt:message key="demo.lt.title.dg.base" /></a></span></li>
+								<li><span><a href="javascript:void(0)"
+								onclick="openTab4Demo('demo-tab-dg-tb','<fmt:message key="demo.lt.title.dg.tb" />','<c:url value="/demo/blog.do?method=dg4tb"/>')"><fmt:message key="demo.lt.title.dg.tb" /></a></span></li>
+								<li><span><a href="javascript:void(0)"
+								onclick="openTab4Demo('demo-tab-dg-export','<fmt:message key="demo.lt.title.dg.export" />','<c:url value="/demo/blog.do?method=dg4export"/>')"><fmt:message key="demo.lt.title.dg.export" /></a></span></li>
+					</ul></li>
+				<li><span><fmt:message key="demo.lt.title.i18n" /></span>
+					<ul>
+						<li><span><a href="javascript:void(0)"
+								onclick="openTab4Demo('demo-tab-i18n-en','<fmt:message key="demo.lt.title.i18n.base" />','<c:url value="/demo/i18n/index.do"/>')"><fmt:message key="demo.lt.title.i18n.base" /></a></span></li>
 					</ul></li>
 			</ul>
 		</div>
 		<div data-options="region:'center',title:''">
 			<div id="demo-lt-tabs" class="easyui-tabs" data-options="fit:true">
-				<div id="demo-tab-index" title="welcome" style="padding: 20px;">
-					<p>wellcome to demos</p>
-					<p>More see <a href="http://www.micmiu.com" target="_blank">http://www.micmiu.com</a></p>
-				</div>
+				<div id="demo-tab-index" title="welcome" style="padding: 20px;">wellcome
+					to demos</div>
 			</div>
+				<div id="form-win"></div>
 		</div>
 	</div>
 </body>
@@ -42,7 +50,7 @@
 	var tabs_id = "#demo-lt-tabs";
 	$(tabs_id).tabs({
 		onBeforeClose : function(title) {
-			return confirm('是否确定关闭 ' + title + '?');
+			return confirm('<fmt:message key="global.msg.easyui.tab.close" /> ' + title + '?');
 		}
 	});
 

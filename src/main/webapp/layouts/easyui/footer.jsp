@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<div style="text-align:center">
-	Copyright micmiu &copy; <a href="http://www.micmiu.com">www.micmiu.com</a>
+<%@ include file="/include/taglibs.jsp"%>
+<div style="text-align: center">
+	Copyright
+	<fmt:message key="global.org.info.name" />
+	&copy; <a href="<fmt:message key="global.org.info.url"/>"><fmt:message
+			key="global.org.info.url" /></a>
 </div>

@@ -5,14 +5,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.micmiu.framework.web.GlobalConstant;
 import com.micmiu.framework.web.v1.system.entity.Role;
 import com.micmiu.framework.web.v1.system.service.RoleService;
 import com.micmiu.framework.web.v1.system.vo.Module;
@@ -29,6 +34,9 @@ public class RoleAction {
 
 	@Autowired
 	private RoleService roleService;
+
+	@Autowired
+	private MessageSource messageSource;
 
 	@RequestMapping(params = { "method=list" })
 	public String list(Model model) {
@@ -74,30 +82,40 @@ public class RoleAction {
 
 	@RequestMapping(params = { "method=save" })
 	@ResponseBody
-	public String save(Role role, RedirectAttributes redirectAttributes) {
+	public String save(Role role, RedirectAttributes redirectAttributes,
+			HttpServletRequest request) {
 		roleService.save(role);
-		String message = "角色：" + role.getRoleName() + " 添加成功";
+		String message = messageSource.getMessage(GlobalConstant.MSG_SUCC,
+				null, RequestContextUtils.getLocale(request));
 		redirectAttributes.addFlashAttribute("message", message);
 		return message;
 	}
 
-	@RequestMapping(params = "method=batchDel")
+	@RequestMapping(params = "method=deleteBatch")
 	@ResponseBody
-	public String batchDelete(String ids) {
+	public String deleteBatch(String ids, HttpServletRequest request) {
 		String message = null;
 		try {
-			roleService.batchDel(ids);
-			message = "角色删除成功";
+			String[] idArr = ids.split(",");
+			for (String id : idArr) {
+				roleService.delete(Long.parseLong(id));
+			}
+			message = messageSource.getMessage(GlobalConstant.MSG_SUCC, null,
+					RequestContextUtils.getLocale(request));
 		} catch (Exception e) {
-			message = "角色删除失败：\n" + e.getMessage();
+			message = messageSource.getMessage(GlobalConstant.MSG_FAILED, null,
+					RequestContextUtils.getLocale(request));
 		}
 		return message;
 	}
 
 	@RequestMapping(params = { "method=delete" })
-	public String delete(Long id, RedirectAttributes redirectAttributes) {
+	public String delete(Long id, RedirectAttributes redirectAttributes,
+			HttpServletRequest request) {
 		roleService.delete(id);
-		redirectAttributes.addFlashAttribute("message", "角色删除成功");
+		redirectAttributes.addFlashAttribute("message", messageSource
+				.getMessage(GlobalConstant.MSG_SUCC, null,
+						RequestContextUtils.getLocale(request)));
 		return "redirect:/system/role.do?method=list";
 	}
 

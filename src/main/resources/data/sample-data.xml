@@ -31,12 +31,15 @@
 	<T_SYS_U2R USER_ID="11" ROLE_ID="3" />
 	<T_SYS_U2R USER_ID="12" ROLE_ID="3" />
 	
-	<T_SYS_MENU ID="1" ORDER_NUM="1000"               MENU_NAME="系统管理" 	ALIAS_NAME="system" 		MENU_URL="" MENU_TYPE=""/>
-	<T_SYS_MENU ID="2" ORDER_NUM="1100" PARENT_ID="1" MENU_NAME="用户管理" 	ALIAS_NAME="user" 			MENU_URL="system/user.do?method=list" MENU_TYPE=""/>
-	<T_SYS_MENU ID="3" ORDER_NUM="1200" PARENT_ID="1" MENU_NAME="角色管理" 	ALIAS_NAME="role" 			MENU_URL="system/role.do?method=list" MENU_TYPE=""/>
-	<T_SYS_MENU ID="4" ORDER_NUM="2000"               MENU_NAME="Demos" 	ALIAS_NAME="demo" 			MENU_URL="" MENU_TYPE=""/>
-	<T_SYS_MENU ID="5" ORDER_NUM="2100" PARENT_ID="4" MENU_NAME="基础演示" 	ALIAS_NAME="demo_common" 	MENU_URL="demo/index.do" MENU_TYPE=""/>
+	<T_SYS_MENU ID="0" ORDER_NUM="0"               	  MENU_NAME="menu.index" 		ALIAS_NAME="index" 			MENU_URL="index.do" 					MENU_TYPE=""/>
+	<T_SYS_MENU ID="1" ORDER_NUM="1000"               MENU_NAME="menu.system" 		ALIAS_NAME="system" 		MENU_URL="" 							MENU_TYPE=""/>
+	<T_SYS_MENU ID="2" ORDER_NUM="1100" PARENT_ID="1" MENU_NAME="menu.system.user" 	ALIAS_NAME="user" 			MENU_URL="system/user.do?method=list" 	MENU_TYPE=""/>
+	<T_SYS_MENU ID="3" ORDER_NUM="1200" PARENT_ID="1" MENU_NAME="menu.system.role" 	ALIAS_NAME="role" 			MENU_URL="system/role.do?method=list" 	MENU_TYPE=""/>
+	<T_SYS_MENU ID="4" ORDER_NUM="2000"               MENU_NAME="menu.demo" 		ALIAS_NAME="demo" 			MENU_URL="" 							MENU_TYPE=""/>
+	<T_SYS_MENU ID="5" ORDER_NUM="2100" PARENT_ID="4" MENU_NAME="menu.demo.common" 	ALIAS_NAME="demo_common" 	MENU_URL="demo/index.do" 				MENU_TYPE=""/>
+	<T_SYS_MENU ID="6" ORDER_NUM="2200" PARENT_ID="4" MENU_NAME="menu.demo.crud" 	ALIAS_NAME="demo_crud" 		MENU_URL="demo/blog.do?method=list" 	MENU_TYPE=""/>
 
+	<T_SYS_PERMSSION ID="1"   MENU_ID="0" RES_NAME="system" RES_CN_NAME="系统" OPERATION="view" />
 	<T_SYS_PERMSSION ID="101" MENU_ID="2" RES_NAME="user" RES_CN_NAME="用户管理" OPERATION="view" />
 	<T_SYS_PERMSSION ID="102" MENU_ID="2" RES_NAME="user" RES_CN_NAME="用户管理" OPERATION="edit" />
 	<T_SYS_PERMSSION ID="103" MENU_ID="2" RES_NAME="user" RES_CN_NAME="用户管理" OPERATION="add" />
@@ -53,7 +56,12 @@
 	<T_SYS_PERMSSION ID="122" MENU_ID="5" RES_NAME="demo_common" RES_CN_NAME="基础演示" OPERATION="edit" />
 	<T_SYS_PERMSSION ID="123" MENU_ID="5" RES_NAME="demo_common" RES_CN_NAME="基础演示" OPERATION="add" />
 	<T_SYS_PERMSSION ID="124" MENU_ID="5" RES_NAME="demo_common" RES_CN_NAME="基础演示" OPERATION="delete" />
+	<T_SYS_PERMSSION ID="125" MENU_ID="6" RES_NAME="demo_common" RES_CN_NAME="CRUD演示" OPERATION="view" />
+	<T_SYS_PERMSSION ID="126" MENU_ID="6" RES_NAME="demo_common" RES_CN_NAME="CRUD演示" OPERATION="edit" />
+	<T_SYS_PERMSSION ID="127" MENU_ID="6" RES_NAME="demo_common" RES_CN_NAME="CRUD演示" OPERATION="add" />
+	<T_SYS_PERMSSION ID="128" MENU_ID="6" RES_NAME="demo_common" RES_CN_NAME="CRUD演示" OPERATION="delete" />
 	
+	<T_SYS_R2P ROLE_ID="1" PERM_ID="1" />
 	<T_SYS_R2P ROLE_ID="1" PERM_ID="101" />
 	<T_SYS_R2P ROLE_ID="1" PERM_ID="102" />
 	<T_SYS_R2P ROLE_ID="1" PERM_ID="103" />
@@ -70,7 +78,12 @@
 	<T_SYS_R2P ROLE_ID="1" PERM_ID="122" />
 	<T_SYS_R2P ROLE_ID="1" PERM_ID="123" />
 	<T_SYS_R2P ROLE_ID="1" PERM_ID="124" />
+	<T_SYS_R2P ROLE_ID="1" PERM_ID="125" />
+	<T_SYS_R2P ROLE_ID="1" PERM_ID="126" />
+	<T_SYS_R2P ROLE_ID="1" PERM_ID="127" />
+	<T_SYS_R2P ROLE_ID="1" PERM_ID="128" />
 	
+	<T_SYS_R2P ROLE_ID="2" PERM_ID="1" />
 	<T_SYS_R2P ROLE_ID="2" PERM_ID="101" />
 	<T_SYS_R2P ROLE_ID="2" PERM_ID="102" />
 	<T_SYS_R2P ROLE_ID="2" PERM_ID="103" />
@@ -87,21 +100,22 @@
 	<T_SYS_R2P ROLE_ID="2" PERM_ID="122" />
 	<T_SYS_R2P ROLE_ID="2" PERM_ID="123" />
 	<T_SYS_R2P ROLE_ID="2" PERM_ID="124" />
+	<T_SYS_R2P ROLE_ID="2" PERM_ID="125" />
+	<T_SYS_R2P ROLE_ID="2" PERM_ID="126" />
+	<T_SYS_R2P ROLE_ID="2" PERM_ID="127" />
+	<T_SYS_R2P ROLE_ID="2" PERM_ID="128" />
 	
+	<T_SYS_R2P ROLE_ID="3" PERM_ID="1" />
 	<T_SYS_R2P ROLE_ID="3" PERM_ID="101" />
 	<T_SYS_R2P ROLE_ID="3" PERM_ID="107" />
 	<T_SYS_R2P ROLE_ID="3" PERM_ID="121" />
+	<T_SYS_R2P ROLE_ID="3" PERM_ID="125" />
 	
-	<T_SYS_R2P ROLE_ID="4" PERM_ID="121" />
-	<T_SYS_R2P ROLE_ID="4" PERM_ID="122" />
-	<T_SYS_R2P ROLE_ID="4" PERM_ID="123" />
-	<T_SYS_R2P ROLE_ID="4" PERM_ID="124" />
+	<T_BLOG ID="1" TITLE="spring" AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="michael" PUBLISH_DATE="2013-04-07"/>
+	<T_BLOG ID="2" TITLE="struts" AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="michael" PUBLISH_DATE="2013-04-07"/>
+	<T_BLOG ID="3" TITLE="hibernate" AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="michael" PUBLISH_DATE="2013-04-07"/>
+	<T_BLOG ID="4" TITLE="shiro" AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="admin" PUBLISH_DATE="2013-04-07"/>
+	<T_BLOG ID="5" TITLE="sso" AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="admin" PUBLISH_DATE="2013-04-07"/>
+	<T_BLOG ID="6" TITLE="cas" AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="user" PUBLISH_DATE="2013-04-07"/>
 	
-	<T_BLOG ID="1" TITLE="spring" 		AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="michael" 	PUBLISH_DATE="2013-04-07"/>
-	<T_BLOG ID="2" TITLE="struts" 		AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="michael" 	PUBLISH_DATE="2013-04-07"/>
-	<T_BLOG ID="3" TITLE="hibernate" 	AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="michael" 	PUBLISH_DATE="2013-04-07"/>
-	<T_BLOG ID="4" TITLE="shiro" 		AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="admin" 		PUBLISH_DATE="2013-04-07"/>
-	<T_BLOG ID="5" TITLE="sso" 			AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="admin" 		PUBLISH_DATE="2013-04-07"/>
-	<T_BLOG ID="6" TITLE="cas" 			AUTHOR="michael" CATEGORY="j2ee" URL="http://www.micmiu.com/j2ee" OTHER="" CREATER="user" 		PUBLISH_DATE="2013-04-07"/>
-
 </dataset>

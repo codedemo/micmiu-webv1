@@ -46,6 +46,13 @@ public interface BasicService<E, ID extends Serializable> {
 	public void delete(E entity);
 
 	/**
+	 * 根据ID批量删除实体
+	 * 
+	 * @param ids
+	 */
+	public void delete(ID[] ids);
+
+	/**
 	 * 修改实体
 	 * 
 	 * @param entity
@@ -101,8 +108,7 @@ public interface BasicService<E, ID extends Serializable> {
 	/**
 	 * 按HQL、可变参数列表 查询对象列表.
 	 * 
-	 * @param paramMap
-	 *            命名参数,按名称绑定.
+	 * @param paramMap 命名参数,按名称绑定.
 	 */
 	public List<E> findList(final String hql, final Map<String, ?> paramMap);
 
@@ -116,8 +122,7 @@ public interface BasicService<E, ID extends Serializable> {
 	/**
 	 * 按HQL查询唯一对象.
 	 * 
-	 * @param paramMap
-	 *            命名参数,按名称绑定.
+	 * @param paramMap 命名参数,按名称绑定.
 	 */
 	public E findUnique(final String hql, final Map<String, ?> paramMap);
 
@@ -135,5 +140,13 @@ public interface BasicService<E, ID extends Serializable> {
 	 */
 
 	public List<E> findList(final Criterion... criterions);
+
+	/**
+	 * 导出查询
+	 * 
+	 * @param query
+	 * @return List
+	 */
+	public List<E> exportPageQuery(AbstractPagedQuery<E> page);
 
 }
