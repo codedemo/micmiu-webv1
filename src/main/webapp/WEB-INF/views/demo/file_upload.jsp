@@ -20,25 +20,30 @@
 		action="${ctx}/demo/FileUpload.do?method=uploadify" method="post">
 		<fieldset class="prepend-top">
 
-			<legend><fmt:message key="demo.upload.title" /></legend>
+			<legend>
+				<fmt:message key="demo.upload.title" />
+			</legend>
 
-			<div id="messageBox" class="error-msg" style="display: none"><fmt:message key="global.valid.errmsg" /></div>
+			<div id="messageBox" class="error-msg" style="display: none">
+				<fmt:message key="global.valid.errmsg" />
+			</div>
 
 			<div class="field">
-				<label for="file" class="field"><fmt:message key="demo.upload.file" />:</label> <input type="file"
-					id="file" name="file" size="20" value="${fileBean.file}"
-					class="required" />
+				<label for="file" class="field"><fmt:message
+						key="demo.upload.file" />:</label> <input type="file" id="file"
+					name="file" size="20" value="${fileBean.file}" class="required" />
 			</div>
 			<div class="field">
-				<label for="other" class="field"><fmt:message key="demo.upload.desc" />:</label> <input type="text"
-					id="other" name="other" size="20" value="${fileBean.other}" />
+				<label for="other" class="field"><fmt:message
+						key="demo.upload.desc" />:</label> <input type="text" id="other"
+					name="other" size="20" value="${fileBean.other}" />
 			</div>
 
 			<div class="field">
 				<input type="button" name="btn_submit"
-					value="<fmt:message key="ui.tb.button.ok" />"
+					value="<fmt:message key="global.btn.ok" />"
 					onclick="formSubmit('#input-form')" /><input type="button"
-					name="btn_cancel" value="<fmt:message key="ui.tb.button.cancel" />"
+					name="btn_cancel" value="<fmt:message key="global.btn.cancel" />"
 					onclick="cancelTabForm('#demo-lt-tabs')" />
 			</div>
 		</fieldset>

@@ -31,9 +31,9 @@
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
 
-	<!--Spring的ApplicationContext 载入 -->
+	<!--扩展 Spring的ApplicationContext 载入 -->
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>com.micmiu.modules.support.spring.MyContextLoaderListener</listener-class>
 	</listener>
 
 	<!-- 该监听器主要定时任务(Quartz)、OpenSessionInViewFilter等引起的内存泄露 -->

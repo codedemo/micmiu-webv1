@@ -1,10 +1,8 @@
 package com.micmiu.framework.web.v1.system.action;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,29 +15,35 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.micmiu.framework.utils.MenuPermUtil;
-import com.micmiu.framework.utils.RefTools;
+import com.micmiu.framework.utils.StringUtil;
 import com.micmiu.framework.web.GlobalConstant;
+import com.micmiu.framework.web.v1.base.action.BasicAction;
+import com.micmiu.framework.web.v1.base.service.BasicService;
 import com.micmiu.framework.web.v1.system.entity.Menu;
-import com.micmiu.framework.web.v1.system.entity.Permssion;
+import com.micmiu.framework.web.v1.system.entity.Permission;
 import com.micmiu.framework.web.v1.system.entity.Role;
 import com.micmiu.framework.web.v1.system.entity.User;
 import com.micmiu.framework.web.v1.system.service.MenuService;
+import com.micmiu.framework.web.v1.system.service.RoleService;
 import com.micmiu.framework.web.v1.system.service.UserService;
 import com.micmiu.framework.web.v1.system.vo.TreeNode;
 import com.micmiu.framework.web.v1.system.vo.UserQuery;
-import com.micmiu.modules.support.easyui.GridColumn;
 
 /**
+ * 用户管理
  * 
  * @author <a href="http://www.micmiu.com">Michael Sun</a>
  */
 @Controller
 @RequestMapping(value = "/system/user.do")
-public class UserAction {
+public class UserAction extends BasicAction<User, Long, UserQuery> {
+
+	private static final String PREFIX = "system.user";
+
+	private static final String REDIRECT = "redirect:/system/user.do?method=showList";
 
 	@Autowired
 	private UserService userService;
@@ -48,84 +52,74 @@ public class UserAction {
 	private MenuService menuService;
 
 	@Autowired
+	private RoleService roleService;
+
+	@Autowired
 	private MessageSource messageSource;
 
-	@RequestMapping(params = { "method=list" })
-	public String list(Model model) {
-		List<User> users = userService.findAll();
-		model.addAttribute("users", users);
-		return "user.list";
+	@Override
+	public BasicService<User, Long> getBasicService() {
+		return userService;
 	}
 
-	@RequestMapping(params = { "method=query" })
-	@ResponseBody
-	public Map<String, Object> query(Model model, UserQuery pageQuery) {
-		List<User> users = userService.pageQuery(pageQuery);
-		Map<String, Object> retMap = new HashMap<String, Object>();
-		retMap.put("total", pageQuery.getTotalCount());
-		retMap.put("rows", users);
-		return retMap;
+	@Override
+	public String getViewPrefix() {
+		return PREFIX;
 	}
 
-	@RequestMapping(params = { "method=getGridColumns" })
-	@ResponseBody
-	public List<GridColumn> getGridColumns(Model model,
-			HttpServletRequest request) {
-		return RefTools.getBeanColumns(User.class, messageSource,
-				RequestContextUtils.getLocale(request));
+	@Override
+	public String getRedirectView() {
+		return REDIRECT;
 	}
 
-	@RequestMapping(params = { "method=showForm" })
-	public String showForm(Long id, Model model) {
-		if (null != id) {
-			model.addAttribute("user", userService.findById(id));
-		} else {
-			model.addAttribute("user", new User());
-		}
-		return "user.form";
+	@Override
+	protected Long[] parseDeleteIDS(HttpServletRequest request) {
+		return StringUtil.parseIdstr(request.getParameter("ids"));
 	}
 
-	@RequestMapping(params = { "method=showView" })
-	public String showView(Long id, Model model) {
-		model.addAttribute("user", userService.findById(id));
-		return "user.view";
+	@Override
+	protected void handler4CreateShow(HttpServletRequest request, User entity,
+			Model model) {
+		super.handler4CreateShow(request, entity, model);
+		model.addAttribute("roleList", roleService.findAll());
 	}
 
-	@RequestMapping(params = { "method=save" })
-	@ResponseBody
-	public String save(User user, RedirectAttributes redirectAttributes) {
-		userService.save(user);
-		String message = "用户：" + user.getLoginName() + " 操作成功";
-		redirectAttributes.addFlashAttribute("message", message);
-		return message;
+	@Override
+	protected void handler4UpdateShow(HttpServletRequest request, User entity,
+			Model model) {
+		super.handler4UpdateShow(request, entity, model);
+		model.addAttribute("roleList", roleService.findAll());
 	}
 
-	@RequestMapping(params = "method=deleteBatch")
-	@ResponseBody
-	public String deleteBatch(String ids, HttpServletRequest request) {
-		String message = null;
-		try {
-			String[] idArr = ids.split(",");
-			for (String id : idArr) {
-				userService.delete(Long.parseLong(id));
+	@Override
+	protected boolean handler4Create(HttpServletRequest request, User entity) {
+		String roleIdStr = request.getParameter("roleId");
+		Role role = roleService.findById(Long.parseLong(roleIdStr));
+		entity.getRoleList().add(role);
+		return true;
+
+	}
+
+	@Override
+	protected boolean handler4Update(HttpServletRequest request, User entity) {
+		handler4Create(request, entity);
+		User exit = userService.findById(entity.getId());
+		entity.setPassword(exit.getPassword());
+		return true;
+	}
+
+	@Override
+	protected boolean allowDeleteData(Long[] ids, StringBuffer msgkey) {
+		for (Long id : ids) {
+			User user = this.userService.findById(id);
+			if (null != user
+					&& SecurityUtils.getSubject().getPrincipal().toString()
+							.equals(user.getLoginName())) {
+				msgkey.append(GlobalConstant.MSG_FORBID_DELETE_SELF);
+				return false;
 			}
-			message = messageSource.getMessage(GlobalConstant.MSG_SUCC, null,
-					RequestContextUtils.getLocale(request));
-		} catch (Exception e) {
-			message = messageSource.getMessage(GlobalConstant.MSG_FAILED, null,
-					RequestContextUtils.getLocale(request));
 		}
-		return message;
-	}
-
-	@RequestMapping(params = { "method=delete" })
-	public String delete(Long id, RedirectAttributes redirectAttributes,
-			HttpServletRequest request) {
-		userService.delete(id);
-		redirectAttributes.addFlashAttribute("message", messageSource
-				.getMessage(GlobalConstant.MSG_SUCC, null,
-						RequestContextUtils.getLocale(request)));
-		return "redirect:/system/user.do?method=list";
+		return true;
 	}
 
 	@RequestMapping(params = { "method=checkLoginName" })
@@ -161,10 +155,16 @@ public class UserAction {
 		return treeNodeList;
 	}
 
+	/**
+	 * 获取角色的所有的菜单
+	 * 
+	 * @param roles
+	 * @return
+	 */
 	private Set<Long> parseMenuIds(List<Role> roles) {
 		Set<Long> ids = new HashSet<Long>();
 		for (Role role : roles) {
-			for (Permssion perm : role.getPermssions()) {
+			for (Permission perm : role.getPermssions()) {
 				recParseMenuIds(ids, perm.getMenu());
 			}
 		}
@@ -172,6 +172,12 @@ public class UserAction {
 
 	}
 
+	/**
+	 * 递归菜单
+	 * 
+	 * @param menuIds
+	 * @param menu
+	 */
 	private void recParseMenuIds(Set<Long> menuIds, Menu menu) {
 		menuIds.add(menu.getId());
 		if (null != menu.getParent()) {

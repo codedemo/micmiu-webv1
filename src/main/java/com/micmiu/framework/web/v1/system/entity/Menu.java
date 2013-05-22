@@ -40,6 +40,9 @@ public class Menu extends IdEntity {
 	@JsonManagedReference
 	private Set<Menu> children = new HashSet<Menu>();
 
+	@JsonManagedReference
+	private Set<Permission> permssionList = new HashSet<Permission>();
+
 	@JsonBackReference
 	private Menu parent;
 
@@ -55,6 +58,17 @@ public class Menu extends IdEntity {
 	@JsonManagedReference
 	public Set<Menu> getChildren() {
 		return children;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "menu")
+	@OrderBy("id")
+	@JsonManagedReference
+	public Set<Permission> getPermssionList() {
+		return permssionList;
+	}
+
+	public void setPermssionList(Set<Permission> permssionList) {
+		this.permssionList = permssionList;
 	}
 
 	@Column(name = "MENU_NAME", length = 50)

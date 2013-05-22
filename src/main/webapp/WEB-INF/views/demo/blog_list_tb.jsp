@@ -14,34 +14,35 @@
 					href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-search'"
 					onclick="MM_utils.formQuery({form_id:'#demotb_query-form',dg_id:'#demotb_dg-list'})"><fmt:message
-						key="ui.tb.button.query" /></a> <a href="javascript:void(0)"
+						key="global.btn.query" /></a> <a href="javascript:void(0)"
 					class="easyui-linkbutton" data-options="iconCls:'icon-redo'"
-					onclick="MM_utils.formReset({form_id:'#demotb_query-form'});"><fmt:message key="ui.tb.button.reset" /></a>
+					onclick="MM_utils.formReset({form_id:'#demotb_query-form'});"><fmt:message
+						key="global.btn.reset" /></a>
 			</form>
 		</div>
 		<div style="margin-bottom: 5px">
-			<shiro:hasPermission name="demo_common:view">
+			<shiro:hasPermission name="demo_common:read">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-add',plain:true"
 					onclick="MM_utils.baseWinAdd({win_url:'blog.do?method=showForm'})"><fmt:message
-						key="ui.tb.button.add" /></a>
+						key="global.btn.create" /></a>
 			</shiro:hasPermission>
-			<shiro:hasPermission name="demo_common:view">
+			<shiro:hasPermission name="demo_common:read">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-edit',plain:true"
 					onclick="MM_utils.baseWinEdit({win_url:'blog.do?method=showForm'});"><fmt:message
-						key="ui.tb.button.edit" /></a>
+						key="global.btn.update" /></a>
 			</shiro:hasPermission>
-			<shiro:hasPermission name="demo_common:view">
+			<shiro:hasPermission name="demo_common:read">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-remove',plain:true"
 					onclick="MM_utils.baseGDDel('#dg-list','blog.do?method=deleteBatch')"><fmt:message
-						key="ui.tb.button.delete" /></a>
+						key="global.btn.delete" /></a>
 			</shiro:hasPermission>
 			<a href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true"
 				onclick="MM_utils.baseView({win_url:'blog.do?method=getViewData'})"><fmt:message
-					key="ui.tb.button.view" /></a>
+					key="global.btn.read" /></a>
 		</div>
 
 	</div>
@@ -49,7 +50,7 @@
 <script type="text/javascript">
 	$('#demotb_dg-list').datagrid({
 		title : '',
-		url : 'blog.do?method=query',
+		url : 'blog.do?method=pageQuery',
 		toolbar : '#demotb_tb',
 		fit : true,
 		rownumbers : true,

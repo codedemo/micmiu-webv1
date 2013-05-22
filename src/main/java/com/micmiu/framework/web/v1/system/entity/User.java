@@ -1,7 +1,6 @@
 package com.micmiu.framework.web.v1.system.entity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,11 +14,13 @@ import javax.persistence.Transient;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.micmiu.framework.anno.ShowParam;
 import com.micmiu.framework.web.v1.base.entity.IdEntity;
 
 /**
@@ -32,32 +33,43 @@ import com.micmiu.framework.web.v1.base.entity.IdEntity;
 @Table(name = "T_SYS_USER")
 public class User extends IdEntity {
 
+	@ShowParam("system.user.loginName")
 	@Column(name = "LOGIN_NAME")
 	private String loginName;
 
 	@Column(name = "PASSWORD")
 	private String password;
 
+	@ShowParam("system.user.name")
 	@Column(name = "NAME")
 	private String name;
 
+	@ShowParam(value = "system.user.email", width = 120)
 	@Column(name = "EMAIL")
 	private String email;
 
+	@ShowParam("system.user.other")
 	@Column(name = "OTHER")
 	private String other;
 
-	private List<Role> roleList = Collections.emptyList();
+	private String roleId;
 
+	private List<Role> roleList = new ArrayList<Role>();
+
+	// 多对多定义
 	@ManyToMany
 	@JoinTable(name = "T_SYS_U2R", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
+	// Fecth策略定义
 	@Fetch(FetchMode.SUBSELECT)
+	// 集合按id排序.
 	@OrderBy("id")
+	// 集合中对象id的缓存.
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 	public List<Role> getRoleList() {
 		return roleList;
 	}
 
+	@ShowParam(value = "system.user.rolename", width = 200)
 	@Transient
 	public String getRoleName() {
 		List<String> roleNames = new ArrayList<String>();
@@ -76,6 +88,7 @@ public class User extends IdEntity {
 		return loginName;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -110,6 +123,19 @@ public class User extends IdEntity {
 
 	public void setOther(String other) {
 		this.other = other;
+	}
+
+	@Transient
+	public String getRoleId() {
+		if (getRoleList().isEmpty()) {
+			return null;
+		}
+		roleId = getRoleList().get(0).getId() + "";
+		return roleId;
+	}
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
 
 	@Override

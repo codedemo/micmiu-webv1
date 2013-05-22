@@ -47,9 +47,9 @@
 	<input type="file" name="file_upload" id="file_upload" />
 	<p>
 		<a href="javascript:$('#file_upload').uploadify('upload')"><fmt:message
-				key="ui.tb.button.ok" /></a>| <a
+				key="global.btn.ok" /></a>| <a
 			href="javascript:$('#file_upload').uploadify('cancel')"><fmt:message
-				key="ui.tb.button.cancel" /></a>
+				key="global.btn.cancel" /></a>
 	</p>
 </body>
 </html>

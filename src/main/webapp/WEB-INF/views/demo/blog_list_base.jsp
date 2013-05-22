@@ -14,7 +14,7 @@
 <script type="text/javascript">
 	$('#base_dg-list').datagrid({
 		title : '',
-		url : 'blog.do?method=query',
+		url : 'blog.do?method=pageQuery',
 		fit : true,
 		rownumbers : true,
 		singleSelect : false,

@@ -28,74 +28,89 @@
 		<input type="hidden" name="id" value="${easyui.id}" />
 		<fieldset class="prepend-top">
 
-			<legend><fmt:message key="demo.form.title" /></legend>
+			<legend>
+				<fmt:message key="demo.form.title" />
+			</legend>
 
-			<div id="messageBox" class="error-msg" style="display: none"><fmt:message key="global.valid.errmsg" /></div>
+			<div id="messageBox" class="error-msg" style="display: none">
+				<fmt:message key="global.valid.errmsg" />
+			</div>
 
 			<div class="field">
-				<label for="textVal" class="field"><fmt:message key="demo.form.textVal" />:</label> <input type="text"
-					id="textVal" name="textVal" size="20" value="${easyui.textVal}"
-					class="required" />
+				<label for="textVal" class="field"><fmt:message
+						key="demo.form.textVal" />:</label> <input type="text" id="textVal"
+					name="textVal" size="20" value="${easyui.textVal}" class="required" />
 			</div>
 			<div class="field">
-				<label for="email" class="field"><fmt:message key="demo.form.email" />:</label> <input type="text"
-					id="email" name="email" size="20" value="${easyui.email}"
+				<label for="email" class="field"><fmt:message
+						key="demo.form.email" />:</label> <input type="text" id="email"
+					name="email" size="20" value="${easyui.email}"
 					class="required email" />
 			</div>
 			<div class="field">
-				<label for="blogUrl" class="field"><fmt:message key="demo.form.blogUrl" />:</label> <input type="text"
-					id="blogUrl" name="blogUrl" size="20" value="${easyui.blogUrl}"
-					class="url" />
+				<label for="blogUrl" class="field"><fmt:message
+						key="demo.form.blogUrl" />:</label> <input type="text" id="blogUrl"
+					name="blogUrl" size="20" value="${easyui.blogUrl}" class="url" />
 			</div>
 			<div class="field">
-				<label for="passwordVal" class="field"><fmt:message key="demo.form.password" />:</label> <input
-					type="password" id="passwordVal" name="passwordVal" size="20"
-					value="" class="required" minlength="6" />
+				<label for="passwordVal" class="field"><fmt:message
+						key="demo.form.password" />:</label> <input type="password"
+					id="passwordVal" name="passwordVal" size="20" value=""
+					class="required" minlength="6" />
 			</div>
 			<div class="field">
-				<label for="re-password" class="field"><fmt:message key="demo.form.re-password" />:</label> <input
-					type="text" id="re-password" name="re-password" size="20" value=""
+				<label for="re-password" class="field"><fmt:message
+						key="demo.form.re-password" />:</label> <input type="text"
+					id="re-password" name="re-password" size="20" value=""
 					equalTo="#passwordVal" />
 			</div>
 			<div class="field">
-				<label for="radioVal" class="field"><fmt:message key="demo.form.radioVal" />:</label> <input type="radio"
-					name="radioVal" value="male"><fmt:message key="demo.form.radio.male" /> | <input type="radio"
-					name="radioVal" value="female"><fmt:message key="demo.form.radio.female" />
+				<label for="radioVal" class="field"><fmt:message
+						key="demo.form.radioVal" />:</label> <input type="radio" name="radioVal"
+					value="male">
+				<fmt:message key="demo.form.radio.male" />
+				| <input type="radio" name="radioVal" value="female">
+				<fmt:message key="demo.form.radio.female" />
 			</div>
 			<div class="field">
-				<label for="dateVal" class="field"><fmt:message key="demo.form.dateVal" />:</label> <input type="text"
-					id="dateVal" name="dateVal" size="20" value="${easyui.dateVal}"
+				<label for="dateVal" class="field"><fmt:message
+						key="demo.form.dateVal" />:</label> <input type="text" id="dateVal"
+					name="dateVal" size="20" value="${easyui.dateVal}"
 					class="Wdate required date" onFocus="WdatePicker({readOnly:true})" />
 			</div>
 			<div class="field">
-				<label for="selectStaticVal" class="field"><fmt:message key="demo.form.selectStaticVal" />:</label> <select
+				<label for="selectStaticVal" class="field"><fmt:message
+						key="demo.form.selectStaticVal" />:</label> <select
 					class="easyui-combobox" id="selectStaticVal" name="selectStaticVal"
 					style="width: 200px;">
 				</select>
 			</div>
 			<div class="field">
-				<label for="selectRemoteVal" class="field"><fmt:message key="demo.form.selectRemoteVal" />:</label> <select
+				<label for="selectRemoteVal" class="field"><fmt:message
+						key="demo.form.selectRemoteVal" />:</label> <select
 					class="easyui-combobox" id="selectRemoteVal" name="selectRemoteVal"
 					style="width: 200px;"></select>
 			</div>
 			<div class="field">
-				<label for="province" class="field"><fmt:message key="demo.form.select.sub" />:</label> <select
-					class="easyui-combobox" id="province" name="province"
-					style="width: 200px;"></select> <select class="easyui-combobox"
-					id="city" name="city" style="width: 200px;"></select>
+				<label for="province" class="field"><fmt:message
+						key="demo.form.select.sub" />:</label> <select class="easyui-combobox"
+					id="province" name="province" style="width: 200px;"></select> <select
+					class="easyui-combobox" id="city" name="city" style="width: 200px;"></select>
 			</div>
 
 			<div class="field">
-				<label for="checkBoxVals" class="field"><fmt:message key="demo.form.checkBoxVals" />:</label> <input
-					type="checkbox" name="checkBoxVals" value="java" />JAVA <input
-					type="checkbox" name="checkBoxVals" value="ruby" />Ruby <input
-					type="checkbox" name="checkBoxVals" value="groovy" />Groovy
+				<label for="checkBoxVals" class="field"><fmt:message
+						key="demo.form.checkBoxVals" />:</label> <input type="checkbox"
+					name="checkBoxVals" value="java" />JAVA <input type="checkbox"
+					name="checkBoxVals" value="ruby" />Ruby <input type="checkbox"
+					name="checkBoxVals" value="groovy" />Groovy
 			</div>
 
 			<div class="field">
-				<input type="button" name="btn_submit" value="<fmt:message key="ui.tb.button.ok" />"
+				<input type="button" name="btn_submit"
+					value="<fmt:message key="global.btn.ok" />"
 					onclick="formSubmit('#input-form')" /><input type="button"
-					name="btn_cancel" value="<fmt:message key="ui.tb.button.cancel" />"
+					name="btn_cancel" value="<fmt:message key="global.btn.cancel" />"
 					onclick="cancelTabForm('#demo-lt-tabs')" />
 			</div>
 		</fieldset>

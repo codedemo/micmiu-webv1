@@ -20,17 +20,18 @@ import org.hibernate.annotations.FetchMode;
 import com.google.common.collect.Lists;
 import com.micmiu.framework.anno.ShowParam;
 import com.micmiu.framework.web.v1.base.entity.IdEntity;
-import com.micmiu.framework.web.v1.system.vo.Permission;
+import com.micmiu.framework.web.v1.base.vo.OperationType;
+import com.micmiu.modules.support.spring.I18nMessageParser;
 
 @Entity
 @Table(name = "T_SYS_ROLE")
 public class Role extends IdEntity {
 
-	@ShowParam("角色名称")
+	@ShowParam("system.role.roleNamee")
 	@Column(name = "ROLE_NAME")
 	private String roleName;
 
-	private List<Permssion> permssions = new ArrayList<Permssion>();
+	private List<Permission> permssions = new ArrayList<Permission>();
 
 	@Column(name = "ROLE_NAME", length = 50)
 	public String getRoleName() {
@@ -44,7 +45,7 @@ public class Role extends IdEntity {
 	@JoinTable(name = "T_SYS_R2P", joinColumns = { @JoinColumn(name = "ROLE_ID") }, inverseJoinColumns = { @JoinColumn(name = "PERM_ID") })
 	@Fetch(FetchMode.SUBSELECT)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public List<Permssion> getPermssions() {
+	public List<Permission> getPermssions() {
 		return permssions;
 	}
 
@@ -52,25 +53,27 @@ public class Role extends IdEntity {
 		this.roleName = roleName;
 	}
 
-	public void setPermssions(List<Permssion> permssions) {
+	public void setPermssions(List<Permission> permssions) {
 		this.permssions = permssions;
 	}
 
-	@ShowParam(value = "操作权限", width = 500)
+	@ShowParam(value = "system.role.nodes", width = 500)
 	@Transient
 	public String getPermissionNames() {
-		List<String> permissionNameList = Lists.newArrayList();
-		for (Permssion permssion : getPermssions()) {
+		List<String> list = Lists.newArrayList();
+		for (Permission permssion : getPermssions()) {
 			try {
-				permissionNameList
-						.add(permssion.getResCnName()
-								+ ":"
-								+ Permission.parse(permssion.getOperation()).displayName);
+				String resName = I18nMessageParser.getInstance().getMessage(
+						permssion.getResCnName());
+				String oper = I18nMessageParser.getInstance().getMessage(
+						OperationType.parse(permssion.getOperation())
+								.getDisplay());
+				list.add(resName + ":" + oper);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return StringUtils.join(permissionNameList, ",");
+		return StringUtils.join(list, ",");
 	}
 
 }

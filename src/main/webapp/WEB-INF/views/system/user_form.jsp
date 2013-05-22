@@ -4,47 +4,65 @@
 <head>
 </head>
 <body>
-	<form:form id="input-form" modelAttribute="user"
-		action="${ctx}/system/user.do?method=save" method="post">
+	<c:if test="${showFormType eq 'create'}">
+		<c:set var="ACTIONURL" value="${ctx}/system/user.do?method=create" />
+	</c:if>
+	<c:if test="${showFormType eq 'update'}">
+		<c:set var="ACTIONURL" value="${ctx}/system/user.do?method=update" />
+	</c:if>
+	<form:form id="input-form" modelAttribute="user" action="${ACTIONURL}"
+		method="post">
 		<input type="hidden" name="id" value="${user.id}" />
 		<fieldset class="prepend-top">
 
-			<legend><fmt:message key="system.user.title" /></legend>
+			<legend>
+				<fmt:message key="system.user.title" />
+			</legend>
 
-			<div id="messageBox" class="error-msg" style="display: none"><fmt:message key="global.valid.errmsg" /></div>
+			<div id="messageBox" class="error-msg" style="display: none">
+				<fmt:message key="global.valid.errmsg" />
+			</div>
 
 			<div>
-				<label for="loginName" class="field"><fmt:message key="system.user.loginName" />:</label> <input type="text"
-					id="loginName" name="loginName" size="20" value="${user.loginName}"
+				<label for="loginName" class="field"><fmt:message
+						key="system.user.loginName" />:</label> <input type="text" id="loginName"
+					name="loginName" size="20" value="${user.loginName}"
 					class="required" />
 			</div>
 			<div>
-				<label for="name" class="field"><fmt:message key="system.user.name" />:</label> <input type="text"
-					id="name" name="name" size="20" value="${user.name}"
+				<label for="name" class="field"><fmt:message
+						key="system.user.name" />:</label> <input type="text" id="name"
+					name="name" size="20" value="${user.name}" class="required"
+					minlength="3" />
+			</div>
+			<c:if test="${showFormType eq 'create'}">
+			<div>
+				<label for="password" class="field"><fmt:message
+						key="system.user.password" />:</label> <input type="password"
+					id="password" name="password" size="20" value="${user.password}"
 					class="required" minlength="3" />
 			</div>
 			<div>
-				<label for="password" class="field"><fmt:message key="system.user.password" />:</label> <input
-					type="password" id="password" name="password" size="20"
-					value="${user.password}" class="required" minlength="3" />
+				<label for="passwordConfirm" class="field"><fmt:message
+						key="system.user.passwordConfirm" />:</label> <input type="password"
+					id="passwordConfirm" name="passwordConfirm" size="20"
+					value="${user.password}" equalTo="#password" />
+			</div>
+			</c:if>
+			<div>
+				<label for="email" class="field"><fmt:message
+						key="system.user.email" />:</label> <input type="text" id="email"
+					name="email" size="40" value="${user.email}" class="email" />
 			</div>
 			<div>
-				<label for="passwordConfirm" class="field"><fmt:message key="system.user.passwordConfirm" />:</label> <input
-					type="password" id="passwordConfirm" name="passwordConfirm"
-					size="20" value="${user.password}" equalTo="#password" />
-			</div>
-			<div>
-				<label for="email" class="field"><fmt:message key="system.user.email" />:</label> <input type="text"
-					id="email" name="email" size="40" value="${user.email}"
-					class="email" />
-			</div>
-			<div>
-				<label for="other" class="field"><fmt:message key="system.user.other" />:</label>
+				<label for="other" class="field"><fmt:message
+						key="system.user.other" />:</label>
 				<textarea rows="3" cols="30" id="other" name="other"
 					style="height: 50px; width: 250px"></textarea>
 			</div>
 			<div>
-				<label for="roleId" class="field"><fmt:message key="system.role.name" />:</label>
+				<label for="roleId" class="field"><fmt:message
+						key="system.role.name" />:</label>
 				<form:select path="roleId" items="${roleList}" itemValue="id"
 					itemLabel="roleName" />
 			</div>
@@ -65,7 +83,7 @@
 													remote : "${ctx}/system/user.do?method=checkLoginName&oldLoginName="
 															+ encodeURIComponent('${user.loginName}')
 												},
-												roleId:'required'
+												roleId : 'required'
 											},
 											messages : {
 												loginName : {

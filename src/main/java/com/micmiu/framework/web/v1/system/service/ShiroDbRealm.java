@@ -20,7 +20,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.micmiu.framework.web.v1.system.entity.Permssion;
+import com.micmiu.framework.web.v1.system.entity.Permission;
 import com.micmiu.framework.web.v1.system.entity.Role;
 import com.micmiu.framework.web.v1.system.entity.User;
 import com.micmiu.modules.captcha.CaptchaServlet;
@@ -81,9 +81,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		if (user != null) {
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 			for (Role role : user.getRoleList()) {
-				List<Permssion> permssions = role.getPermssions();
+				List<Permission> permssions = role.getPermssions();
 				List<String> permStrs = new ArrayList<String>();
-				for (Permssion p : permssions) {
+				for (Permission p : permssions) {
 					permStrs.add(p.getShiroPerm());
 					logger.debug(">>>Permssion:" + p.getShiroPerm());
 				}

@@ -1,14 +1,17 @@
 package com.micmiu.framework.utils;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
 import org.springframework.context.MessageSource;
 
+import com.micmiu.framework.web.v1.base.vo.OperationType;
 import com.micmiu.framework.web.v1.system.entity.Menu;
-import com.micmiu.framework.web.v1.system.vo.Permission;
+import com.micmiu.framework.web.v1.system.entity.Permission;
 import com.micmiu.framework.web.v1.system.vo.TreeNode;
+import com.micmiu.modules.support.spring.I18nMessageParser;
 
 /**
  * 
@@ -17,7 +20,7 @@ import com.micmiu.framework.web.v1.system.vo.TreeNode;
 public class MenuPermUtil {
 
 	/**
-	 * 转化用户菜单
+	 * 转化用户菜单为HTML格式
 	 * 
 	 * @param allMenus
 	 * @param userMenus
@@ -35,6 +38,16 @@ public class MenuPermUtil {
 		}
 	}
 
+	/**
+	 * 递归菜单转化为HTML
+	 * 
+	 * @param ids
+	 * @param menu
+	 * @param contextPath
+	 * @param messageSource
+	 * @param locale
+	 * @return
+	 */
 	private static TreeNode recParseMenu(Set<Long> ids, Menu menu,
 			String contextPath, MessageSource messageSource, Locale locale) {
 		TreeNode vo = new TreeNode();
@@ -68,38 +81,17 @@ public class MenuPermUtil {
 	}
 
 	/**
-	 * 转化所有的权限树形结构
+	 * 转化已有的权限ID
 	 * 
-	 * @param allMenus
-	 * @param permTree
-	 * @param hasPerms
+	 * @param permssions
+	 * @return
 	 */
-	public static void parseMenuPermTree(List<Menu> allMenus,
-			List<TreeNode> permTree) {
-		for (Menu menu : allMenus) {
-			permTree.add(recPermTree(menu));
-
+	public static Set<String> parsePermissionStrs(List<Permission> permssions) {
+		Set<String> permStrs = new HashSet<String>();
+		for (Permission permssion : permssions) {
+			permStrs.add("perm:" + permssion.getId());
 		}
-	}
-
-	private static TreeNode recPermTree(Menu menu) {
-		TreeNode vo = new TreeNode();
-		vo.setId(menu.getId() + "");
-		vo.setText(menu.getMenuName());
-		if (!menu.getChildren().isEmpty()) {
-			for (Menu childMenu : menu.getChildren()) {
-				vo.getChildren().add(recPermTree(childMenu));
-			}
-		} else {
-			for (Permission p : Permission.values()) {
-				TreeNode permNode = new TreeNode();
-				permNode.setId(menu.getId() + ":" + menu.getAliasName() + ":"
-						+ p.getValue());
-				permNode.setText(p.getDisplayName());
-				vo.getChildren().add(permNode);
-			}
-		}
-		return vo;
+		return permStrs;
 	}
 
 	/**
@@ -117,24 +109,33 @@ public class MenuPermUtil {
 		}
 	}
 
+	/**
+	 * 递归解析权限树型
+	 * 
+	 * @param menu
+	 * @param hasPerms
+	 * @return
+	 */
 	private static TreeNode recMenuPermTree(Menu menu, Set<String> hasPerms) {
 		TreeNode vo = new TreeNode();
-		vo.setId(menu.getId() + "");
-		vo.setText(menu.getMenuName());
+		vo.setId("menu:" + menu.getId());
+		vo.setText(I18nMessageParser.getInstance().getMessage(
+				menu.getMenuName()));
 		if (!menu.getChildren().isEmpty()) {
 			for (Menu childMenu : menu.getChildren()) {
 				vo.getChildren().add(recMenuPermTree(childMenu, hasPerms));
 			}
 		} else {
-			for (Permission p : Permission.values()) {
+			for (Permission perm : menu.getPermssionList()) {
 				TreeNode permNode = new TreeNode();
-				String nodeId = menu.getId() + ":" + menu.getAliasName() + ":"
-						+ p.getValue();
+				String nodeId = "perm:" + perm.getId();
 				permNode.setId(nodeId);
-				if (hasPerms.contains(nodeId)) {
+				if (null != hasPerms && hasPerms.contains(nodeId)) {
 					permNode.setChecked(true);
 				}
-				permNode.setText(p.getDisplayName());
+				permNode.setText(I18nMessageParser.getInstance().getMessage(
+						OperationType.parse(perm.getOperation()).getDisplay()));
+
 				vo.getChildren().add(permNode);
 			}
 		}

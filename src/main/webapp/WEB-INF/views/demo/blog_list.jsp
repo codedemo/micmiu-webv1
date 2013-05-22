@@ -13,39 +13,39 @@
 				: <input style="width: 80px" name="title"> <a
 					href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-search'" onclick="MM_utils.formQuery()"><fmt:message
-						key="ui.tb.button.query" /></a><a href="javascript:void(0)"
+						key="global.btn.query" /></a><a href="javascript:void(0)"
 					class="easyui-linkbutton" data-options="iconCls:'icon-redo'"
 					onclick="MM_utils.formReset();"><fmt:message
-						key="ui.tb.button.reset" /></a>
+						key="global.btn.reset" /></a>
 			</form>
 			<form id="export-form" method="post"></form>
 		</div>
 		<div style="margin-bottom: 5px">
-			<shiro:hasPermission name="demo_common:view">
+			<shiro:hasPermission name="demo_common:read">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-add',plain:true"
 					onclick="MM_utils.baseWinAdd({win_url:'blog.do?method=showForm'})"><fmt:message
-						key="ui.tb.button.add" /></a>
+						key="global.btn.create" /></a>
 			</shiro:hasPermission>
-			<shiro:hasPermission name="demo_common:view">
+			<shiro:hasPermission name="demo_common:read">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-edit',plain:true"
 					onclick="MM_utils.baseWinEdit({win_url:'blog.do?method=showForm'});"><fmt:message
-						key="ui.tb.button.edit" /></a>
+						key="global.btn.update" /></a>
 			</shiro:hasPermission>
-			<shiro:hasPermission name="demo_common:view">
+			<shiro:hasPermission name="demo_common:read">
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					data-options="iconCls:'icon-remove',plain:true"
 					onclick="MM_utils.baseGDDel('#dg-list','blog.do?method=deleteBatch')"><fmt:message
-						key="ui.tb.button.delete" /></a>
+						key="global.btn.delete" /></a>
 			</shiro:hasPermission>
 			<a href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true"
 				onclick="MM_utils.baseView({win_url:'blog.do?method=getViewData'})"><fmt:message
-					key="ui.tb.button.view" /></a> <a href="javascript:void(0)" id="tb_mb"
+					key="global.btn.read" /></a> <a href="javascript:void(0)" id="tb_mb"
 				class="easyui-menubutton"
 				data-options="iconCls:'icon-excel',plain:true"><fmt:message
-					key="ui.tb.button.export" /></a>
+					key="global.btn.export" /></a>
 		</div>
 		<div id="mb_mm" style="width: 50px;">
 			<div data-options="iconCls:'icon-excel'"
@@ -67,7 +67,7 @@
 	});
 	$('#dg-list').datagrid({
 		title : '',
-		url : 'blog.do?method=query',
+		url : 'blog.do?method=pageQuery',
 		toolbar : '#tb',
 		fit : true,
 		rownumbers : true,

@@ -21,7 +21,7 @@
 		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 		
 	<bean id="localeResolver"
-		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		class="com.micmiu.modules.support.spring.MySessionLocaleResolver">
 		<property name="defaultLocale" value="zh_CN"></property>
 	</bean>
 

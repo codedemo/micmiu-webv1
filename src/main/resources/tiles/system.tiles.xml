@@ -12,29 +12,29 @@
 	</definition>
 
 	<!-- user page config -->
-	<definition name="user.list" extends="defaultTemplate">
+	<definition name="system.user.list" extends="defaultTemplate">
 		<put-attribute name="workspace"
 			value="/WEB-INF/views/system/user_list.jsp" />
 	</definition>
-	<definition name="user.form" extends="winTemplate">
+	<definition name="system.user.form" extends="winTemplate">
 		<put-attribute name="workspace"
 			value="/WEB-INF/views/system/user_form.jsp" />
 	</definition>
-	<definition name="user.view" extends="winTemplate">
+	<definition name="system.user.view" extends="winTemplate">
 		<put-attribute name="workspace"
 			value="/WEB-INF/views/system/user_view.jsp" />
 	</definition>
 
 	<!-- role page config -->
-	<definition name="role.list" extends="defaultTemplate">
+	<definition name="system.role.list" extends="defaultTemplate">
 		<put-attribute name="workspace"
 			value="/WEB-INF/views/system/role_list.jsp" />
 	</definition>
-	<definition name="role.form" extends="winTemplate">
+	<definition name="system.role.form" extends="winTemplate">
 		<put-attribute name="workspace"
 			value="/WEB-INF/views/system/role_form.jsp" />
 	</definition>
-	<definition name="role.view" extends="winTemplate">
+	<definition name="system.role.view" extends="winTemplate">
 		<put-attribute name="workspace"
 			value="/WEB-INF/views/system/role_view.jsp" />
 	</definition>

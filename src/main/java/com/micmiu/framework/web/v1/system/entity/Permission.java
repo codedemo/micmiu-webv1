@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonBackReference;
 
 import com.micmiu.framework.web.v1.base.entity.IdEntity;
 
@@ -17,7 +18,7 @@ import com.micmiu.framework.web.v1.base.entity.IdEntity;
  */
 @Entity
 @Table(name = "T_SYS_PERMSSION")
-public class Permssion extends IdEntity {
+public class Permission extends IdEntity {
 
 	private String resName;
 
@@ -25,6 +26,7 @@ public class Permssion extends IdEntity {
 
 	private String operation;
 
+	@JsonBackReference
 	private Menu menu;
 
 	@Column(name = "RES_NAME", length = 50)
@@ -44,6 +46,7 @@ public class Permssion extends IdEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "MENU_ID")
+	@JsonBackReference
 	public Menu getMenu() {
 		return menu;
 	}
